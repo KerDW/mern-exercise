@@ -17,9 +17,9 @@ const SongSchema = new mongoose.Schema({
     comments: {
         type: String
     },
-    thumbnail: {
-        data: Buffer,
-        contentType: String
+    thumbnail_url: {
+        // YT CSS selector (style): .ytp-cued-thumbnail-overlay-image
+        type: String
     }
 });
 
