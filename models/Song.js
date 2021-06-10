@@ -5,6 +5,10 @@ const SongSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    name: {
+        type: String,
+        required: true
+    },
     mood: {
         type: String
     },
@@ -18,8 +22,8 @@ const SongSchema = new mongoose.Schema({
         type: String
     },
     thumbnail_url: {
-        // YT CSS selector (style): .ytp-cued-thumbnail-overlay-image
-        type: String
+        type: String,
+        required: true
     }
 });
 

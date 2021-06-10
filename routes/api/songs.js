@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const puppeteer = require('puppeteer');
 
 // Load song model
 const Song = require('../../models/Song');
@@ -27,6 +28,8 @@ router.get('/:id', (req, res) => {
 // @access Public
 router.post('/', (req, res) => {
 
+  // get thumbnail url
+
   const VIDEO_ID_CHARACTERS = 11;
 
   var video_id_position = req.body.url.search("v=") + 2;
@@ -34,10 +37,36 @@ router.post('/', (req, res) => {
   
   req.body.thumbnail_url = "https://i.ytimg.com/vi/" + video_id + "/hqdefault.jpg";
 
-  Song.create(req.body)
-  .then(song => res.json({ msg: 'Song added' }))
-  .catch(err => res.status(400).json({ error: 'Unable to add this song' })
-  );
+  // get song name
+
+  (async () => {
+    const browser = await puppeteer.launch({headless: true});
+    const page = await browser.newPage();
+
+    await page.goto(req.body.url);
+
+    var accept_button_selector = "#yDmH0d > c-wiz > div > div > div > div.NIoIEf > div.G4njw > div.qqtRac > form > div.lssxud > div > button > div.VfPpkd-RLmnJb"
+
+    await page.waitForSelector(accept_button_selector)
+    await page.click(accept_button_selector)
+
+    var title_selector = "yt-formatted-string.ytd-video-primary-info-renderer:nth-child(1)"
+
+    await page.waitForSelector(title_selector)
+    req.body.name = await page.$eval(title_selector, el => el.innerText);
+
+    await browser.close();
+
+  })().then(() => {
+      
+    Song.create(req.body)
+    .then(song => res.json({ msg: 'Song added' }))
+    .catch(err => res.status(400).json({ error: 'Unable to add this song' })
+    );
+
+  });
+
+  
   
 });
 
