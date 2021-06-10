@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const puppeteer = require('puppeteer');
+const axios = require('axios');
 
 // Load song model
 const Song = require('../../models/Song');
@@ -27,57 +28,67 @@ router.get('/:id', (req, res) => {
 // @description add/save song
 // @access Public
 router.post('/', (req, res) => {
-
-  // get thumbnail url
-
+  
+  const yt_api_key = process.env.YT_API_KEY;
   const VIDEO_ID_CHARACTERS = 11;
-
+  
   var video_id_position = req.body.url.search("v=") + 2;
   var video_id = req.body.url.substr(video_id_position, video_id_position + VIDEO_ID_CHARACTERS);
   
-  req.body.thumbnail_url = "https://i.ytimg.com/vi/" + video_id + "/hqdefault.jpg";
+  axios.get("https://youtube.googleapis.com/youtube/v3/videos?part=snippet&id=" + video_id + "&key=" + yt_api_key).then(response => {
 
-  if(!req.body.name){
+    req.body.name = response.data.items[0].snippet.title;
+    req.body.thumbnail_url = response.data.items[0].snippet.thumbnails.high.url;
 
-    // get song name
-
-    (async () => {
-      const browser = await puppeteer.launch({headless: true});
-      const page = await browser.newPage();
-
-      await page.goto(req.body.url);
-
-      // click yt random page's button
-
-      var accept_button_selector = "#yDmH0d > c-wiz > div > div > div > div.NIoIEf > div.G4njw > div.qqtRac > form > div.lssxud > div > button > div.VfPpkd-RLmnJb"
-
-      await page.waitForSelector(accept_button_selector)
-      await page.click(accept_button_selector)
-
-      // get title
-
-      var title_selector = "yt-formatted-string.ytd-video-primary-info-renderer:nth-child(1)"
-
-      await page.waitForSelector(title_selector)
-      req.body.name = await page.$eval(title_selector, el => el.innerText);
-
-      await browser.close();
-
-    })().then(() => {
-        
-      Song.create(req.body)
-      .then(song => res.json({ msg: 'Song added' }))
-      .catch(err => res.status(400).json({ error: 'Unable to add this song' })
-      );
-
-    });
-
-  } else {
     Song.create(req.body)
       .then(song => res.json({ msg: 'Song added' }))
-      .catch(err => res.status(400).json({ error: 'Unable to add this song' })
-      );
-  }
+      .catch(err => res.status(400).json({ error: 'Unable to add this song' }));
+
+  });
+
+  // req.body.thumbnail_url = "https://i.ytimg.com/vi/" + video_id + "/hqdefault.jpg";
+
+  // if(!req.body.name){
+
+  //   // get song name
+
+  //   (async () => {
+  //     const browser = await puppeteer.launch({headless: true});
+  //     const page = await browser.newPage();
+
+  //     await page.goto(req.body.url);
+
+  //     // click yt random page's button
+
+  //     var accept_button_selector = "#yDmH0d > c-wiz > div > div > div > div.NIoIEf > div.G4njw > div.qqtRac > form > div.lssxud > div > button > div.VfPpkd-RLmnJb"
+
+  //     await page.waitForSelector(accept_button_selector)
+  //     await page.click(accept_button_selector)
+
+  //     // get title
+
+  //     var title_selector = "yt-formatted-string.ytd-video-primary-info-renderer:nth-child(1)"
+
+  //     await page.waitForSelector(title_selector)
+  //     req.body.name = await page.$eval(title_selector, el => el.innerText);
+
+  //     await browser.close();
+
+  //   })().then(() => {
+        
+  //     Song.create(req.body)
+  //     .then(song => res.json({ msg: 'Song added' }))
+  //     .catch(err => res.status(400).json({ error: 'Unable to add this song' })
+  //     );
+
+  //   });
+
+  // } else {
+  //   Song.create(req.body)
+  //     .then(song => res.json({ msg: 'Song added' }))
+  //     .catch(err => res.status(400).json({ error: 'Unable to add this song' })
+  //     );
+  // }
 
   
   
