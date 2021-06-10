@@ -37,38 +37,47 @@ router.post('/', (req, res) => {
   
   req.body.thumbnail_url = "https://i.ytimg.com/vi/" + video_id + "/hqdefault.jpg";
 
-  // get song name
+  if(!req.body.name){
 
-  (async () => {
-    const browser = await puppeteer.launch({headless: true});
-    const page = await browser.newPage();
+    // get song name
 
-    await page.goto(req.body.url);
+    (async () => {
+      const browser = await puppeteer.launch({headless: true});
+      const page = await browser.newPage();
 
-    // click yt random page's button
+      await page.goto(req.body.url);
 
-    var accept_button_selector = "#yDmH0d > c-wiz > div > div > div > div.NIoIEf > div.G4njw > div.qqtRac > form > div.lssxud > div > button > div.VfPpkd-RLmnJb"
+      // click yt random page's button
 
-    await page.waitForSelector(accept_button_selector)
-    await page.click(accept_button_selector)
+      var accept_button_selector = "#yDmH0d > c-wiz > div > div > div > div.NIoIEf > div.G4njw > div.qqtRac > form > div.lssxud > div > button > div.VfPpkd-RLmnJb"
 
-    // get title
+      await page.waitForSelector(accept_button_selector)
+      await page.click(accept_button_selector)
 
-    var title_selector = "yt-formatted-string.ytd-video-primary-info-renderer:nth-child(1)"
+      // get title
 
-    await page.waitForSelector(title_selector)
-    req.body.name = await page.$eval(title_selector, el => el.innerText);
+      var title_selector = "yt-formatted-string.ytd-video-primary-info-renderer:nth-child(1)"
 
-    await browser.close();
+      await page.waitForSelector(title_selector)
+      req.body.name = await page.$eval(title_selector, el => el.innerText);
 
-  })().then(() => {
-      
+      await browser.close();
+
+    })().then(() => {
+        
+      Song.create(req.body)
+      .then(song => res.json({ msg: 'Song added' }))
+      .catch(err => res.status(400).json({ error: 'Unable to add this song' })
+      );
+
+    });
+
+  } else {
     Song.create(req.body)
-    .then(song => res.json({ msg: 'Song added' }))
-    .catch(err => res.status(400).json({ error: 'Unable to add this song' })
-    );
-
-  });
+      .then(song => res.json({ msg: 'Song added' }))
+      .catch(err => res.status(400).json({ error: 'Unable to add this song' })
+      );
+  }
 
   
   
