@@ -15,10 +15,7 @@ const SongSchema = new mongoose.Schema({
     genre: {
         type: String
     },
-    author: {
-        type: String
-    },
-    comments: {
+    description: {
         type: String
     },
     thumbnail_url: {

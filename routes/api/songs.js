@@ -45,10 +45,14 @@ router.post('/', (req, res) => {
 
     await page.goto(req.body.url);
 
+    // click yt random page's button
+
     var accept_button_selector = "#yDmH0d > c-wiz > div > div > div > div.NIoIEf > div.G4njw > div.qqtRac > form > div.lssxud > div > button > div.VfPpkd-RLmnJb"
 
     await page.waitForSelector(accept_button_selector)
     await page.click(accept_button_selector)
+
+    // get title
 
     var title_selector = "yt-formatted-string.ytd-video-primary-info-renderer:nth-child(1)"
 
