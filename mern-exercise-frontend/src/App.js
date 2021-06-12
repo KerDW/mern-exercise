@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 
 import RootComponent from './components/RootComponent';
+import ShowSongList from './components/SongComponents/ShowSongList';
 import CreateBook from './components/BookComponents/CreateBook';
 import ShowBookList from './components/BookComponents/ShowBookList';
 import ShowBookDetails from './components/BookComponents/ShowBookDetails';
@@ -14,6 +15,7 @@ class App extends Component {
       <Router>
         <div>
           <Route exact path='/' component={RootComponent} />
+          <Route exact path='/songs' component={ShowSongList} />
           <Route exact path="/books" component={ShowBookList} />
           <Route path='/books/create-book' component={CreateBook} />
           <Route path='/books/edit-book/:id' component={UpdateBookInfo} />
