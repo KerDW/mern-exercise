@@ -4,6 +4,7 @@ import './App.css';
 
 import RootComponent from './components/RootComponent';
 import ShowSongList from './components/SongComponents/ShowSongList';
+import AddSong from './components/SongComponents/AddSong';
 import CreateBook from './components/BookComponents/CreateBook';
 import ShowBookList from './components/BookComponents/ShowBookList';
 import ShowBookDetails from './components/BookComponents/ShowBookDetails';
@@ -16,6 +17,7 @@ class App extends Component {
         <div>
           <Route exact path='/' component={RootComponent} />
           <Route exact path='/songs' component={ShowSongList} />
+          <Route path='/songs/add-song' component={AddSong} />
           <Route exact path="/books" component={ShowBookList} />
           <Route path='/books/create-book' component={CreateBook} />
           <Route path='/books/edit-book/:id' component={UpdateBookInfo} />
