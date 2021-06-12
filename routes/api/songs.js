@@ -37,8 +37,10 @@ router.post('/', (req, res) => {
   
   axios.get("https://youtube.googleapis.com/youtube/v3/videos?part=snippet&id=" + video_id + "&key=" + yt_api_key).then(response => {
 
-    req.body.name = response.data.items[0].snippet.title;
-    req.body.thumbnail_url = response.data.items[0].snippet.thumbnails.high.url;
+    video_info = response.data.items[0].snippet;
+
+    req.body.name = video_info.title;
+    req.body.thumbnail_url = video_info.thumbnails.high.url || Object.keys(video_info.thumbnails)[0].url;
 
     Song.create(req.body)
       .then(song => res.json({ msg: 'Song added' }))

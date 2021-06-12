@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 
-import CreateBook from './components/CreateBook';
-import ShowBookList from './components/ShowBookList';
-import ShowBookDetails from './components/ShowBookDetails';
-import UpdateBookInfo from './components/UpdateBookInfo';
+import CreateBook from './components/BookComponents/CreateBook';
+import ShowBookList from './components/BookComponents/ShowBookList';
+import ShowBookDetails from './components/BookComponents/ShowBookDetails';
+import UpdateBookInfo from './components/BookComponents/UpdateBookInfo';
 
 class App extends Component {
   render() {
