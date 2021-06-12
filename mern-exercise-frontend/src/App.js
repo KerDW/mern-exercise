@@ -6,6 +6,7 @@ import RootComponent from './components/RootComponent';
 import ShowSongList from './components/SongComponents/ShowSongList';
 import AddSong from './components/SongComponents/AddSong';
 import ShowSongDetails from './components/SongComponents/ShowSongDetails';
+import UpdateSong from './components/SongComponents/UpdateSong';
 import CreateBook from './components/BookComponents/CreateBook';
 import ShowBookList from './components/BookComponents/ShowBookList';
 import ShowBookDetails from './components/BookComponents/ShowBookDetails';
@@ -20,6 +21,7 @@ class App extends Component {
           <Route exact path='/songs' component={ShowSongList} />
           <Route path='/songs/add-song' component={AddSong} />
           <Route path='/songs/show-song/:id' component={ShowSongDetails} />
+          <Route path='/songs/edit-song/:id' component={UpdateSong} />
           <Route exact path="/books" component={ShowBookList} />
           <Route path='/books/create-book' component={CreateBook} />
           <Route path='/books/edit-book/:id' component={UpdateBookInfo} />
