@@ -48,8 +48,10 @@ class ShowBookList extends Component {
               <h2 className="display-4 text-center">Books List</h2>
             </div>
 
+            <hr />
+
             <div className="col-md-11">
-              <Link to="/create-book" className="btn btn-outline-warning float-right">
+              <Link to="/books/create-book" className="btn btn-outline-warning float-right">
                 + Add New Book
               </Link>
               <br />

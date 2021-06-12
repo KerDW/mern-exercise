@@ -30,7 +30,7 @@ class showBookDetails extends Component {
     axios
       .delete('http://localhost:8082/api/books/'+id)
       .then(res => {
-        this.props.history.push("/");
+        this.props.history.push("/books");
       })
       .catch(err => {
         console.log("Error form ShowBookDetails_deleteClick");
@@ -92,7 +92,7 @@ class showBookDetails extends Component {
           <div className="row">
             <div className="col-md-10 m-auto">
               <br /> <br />
-              <Link to="/" className="btn btn-outline-warning float-left">
+              <Link to="/books/" className="btn btn-outline-warning float-left">
                   Show Book List
               </Link>
             </div>
@@ -115,7 +115,7 @@ class showBookDetails extends Component {
             </div>
 
             <div className="col-md-6">
-              <Link to={`/edit-book/${book._id}`} className="btn btn-outline-info btn-lg btn-block">
+              <Link to={`/books/edit-book/${book._id}`} className="btn btn-outline-info btn-lg btn-block">
                     Edit Book
               </Link>
               <br />
