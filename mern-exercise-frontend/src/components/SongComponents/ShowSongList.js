@@ -14,16 +14,7 @@ class ShowSongList extends Component {
   }
 
   componentDidMount() {
-    axios
-      .get('http://localhost:8082/api/songs')
-      .then(res => {
-        this.setState({
-          songs: res.data
-        })
-      })
-      .catch(err =>{
-        console.log('Error from ShowSongList');
-      })
+    this.onReloadData()
   };
 
   onReloadData() {
@@ -99,6 +90,7 @@ class ShowSongList extends Component {
               <Link to="/songs/add-song" className="btn btn-outline-warning btn-block float-right">
                 + Add song
               </Link>
+              <br/><br/>
               <button type="button" className="btn btn-outline-danger btn-block" onClick={this.onDeleteAllClick.bind(this)}>Remove all songs</button>
             </div>
 
