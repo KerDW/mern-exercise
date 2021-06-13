@@ -8,7 +8,8 @@ class ShowSongList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      songs: []
+      songs: [],
+      url: ""
     };
   }
 
@@ -25,6 +26,53 @@ class ShowSongList extends Component {
       })
   };
 
+  onReloadData() {
+    axios
+      .get('http://localhost:8082/api/songs')
+      .then(res => {
+        this.setState({
+          songs: res.data
+        })
+      })
+      .catch(err =>{
+        console.log('Error from ShowSongList');
+      })
+  }
+
+  onChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  onSubmit = e => {
+    e.preventDefault();
+
+    const data = {
+        url: this.state.url
+    };
+
+    axios
+      .post('http://localhost:8082/api/songs', data)
+      .then(res => {
+        this.setState({
+            url: ""
+        })
+        this.onReloadData()
+      })
+      .catch(err => {
+        console.log("Error in AddSong!");
+      })
+  };
+
+  onDeleteAllClick() {
+    axios
+      .delete('http://localhost:8082/api/songs')
+      .then(res => {
+        this.onReloadData()
+      })
+      .catch(err => {
+        console.log("Error form ShowSongList_deleteAllClick");
+      })
+  }
 
   render() {
     const songs = this.state.songs;
@@ -42,21 +90,38 @@ class ShowSongList extends Component {
       <div className="ShowSongList">
         <div className="container">
           <div className="row">
-            <div className="col-md-12">
+            <div className="col-md-10">
               <br />
               <h2 className="display-4 text-center">Songs</h2>
             </div>
 
-            <hr />
-
-            <div className="col-md-11">
-              <Link to="/songs/add-song" className="btn btn-outline-warning float-right">
+            <div className="addSongButton col-md-2">
+              <Link to="/songs/add-song" className="btn btn-outline-warning btn-block float-right">
                 + Add song
               </Link>
-              <br />
-              <br />
-              <hr />
+              <button type="button" className="btn btn-outline-danger btn-block" onClick={this.onDeleteAllClick.bind(this)}>Remove all songs</button>
             </div>
+
+            <div className="addSongField col-md-12">
+              <form className="form-inline" noValidate onSubmit={this.onSubmit.bind(this)}>
+                <input
+                    type='text'
+                    name='url'
+                    placeholder="URL"
+                    size="100"
+                    className='form-control input-url'
+                    value={this.state.url}
+                    onChange={this.onChange}
+                />
+                <input
+                    type="submit"
+                    className="btn btn-outline-warning saveSongButton"
+                    value="Save song"
+                />
+                </form>
+            </div>
+
+            
 
           </div>
 

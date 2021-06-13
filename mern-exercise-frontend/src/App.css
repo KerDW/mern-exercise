@@ -147,3 +147,16 @@
 .songImage {
   padding: 102px 92px 84px 230px;
 }
+
+.addSongButton {
+  margin-top: 5%;
+}
+
+.addSongField {
+  padding-top: 2%;
+  padding-left: 5%;
+}
+
+.saveSongButton {
+  margin-left: 0.5%;
+}

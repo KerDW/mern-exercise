@@ -7,7 +7,7 @@ const SongContainer = (props) => {
 
     return(
         <div className="song-container">
-            <img src={`${song.thumbnail_url}`} alt=""/>
+            <img src={`${song.thumbnail_url}`} alt="song_thumbnail"/>
             <div className="desc">
                 <h2>
                     <Link to={`/songs/show-song/${song._id}`}>
