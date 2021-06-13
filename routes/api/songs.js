@@ -46,6 +46,9 @@ router.post('/', (req, res) => {
       .then(song => res.json({ msg: 'Song added' }))
       .catch(err => res.status(400).json({ error: 'Unable to add this song' }));
 
+  })
+  .catch(function (error){
+    console.log(error)
   });
   
 });
