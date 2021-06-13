@@ -22,14 +22,16 @@ class AddSong extends Component {
   onSubmit = e => {
     e.preventDefault();
 
-    const data = {
-        url: this.state.url,
-        mood: this.state.mood,
-        genre: this.state.genre,
-        description: this.state.description
-    };
+    if(this.state.url.includes("youtube.com/watch?v=")){
 
-    axios
+      const data = {
+          url: this.state.url,
+          mood: this.state.mood,
+          genre: this.state.genre,
+          description: this.state.description
+      };
+
+      axios
       .post('http://localhost:8082/api/songs', data)
       .then(res => {
         this.setState({
@@ -43,6 +45,10 @@ class AddSong extends Component {
       .catch(err => {
         console.log("Error in AddSong!");
       })
+
+    } else {
+      alert('Insert a valid youtube URL')
+    }
   };
 
   render() {

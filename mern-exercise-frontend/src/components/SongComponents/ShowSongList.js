@@ -37,21 +37,28 @@ class ShowSongList extends Component {
   onSubmit = e => {
     e.preventDefault();
 
-    const data = {
-        url: this.state.url
-    };
+    if(this.state.url.includes("youtube.com/watch?v=")){
 
-    axios
-      .post('http://localhost:8082/api/songs', data)
-      .then(res => {
-        this.setState({
-            url: ""
+      const data = {
+          url: this.state.url
+      };
+
+      axios
+        .post('http://localhost:8082/api/songs', data)
+        .then(res => {
+          this.setState({
+              url: ""
+          })
+          this.onReloadData()
         })
-        this.onReloadData()
-      })
-      .catch(err => {
-        console.log("Error in AddSong!");
-      })
+        .catch(err => {
+          console.log("Error in AddSong!");
+        })
+
+    } else {
+      alert('insert a valid youtube URL')
+    }
+
   };
 
   onDeleteAllClick() {
