@@ -9,6 +9,8 @@ class ShowSongList extends Component {
     super(props);
     this.state = {
       songs: [],
+      allFilteredSongs: [],
+      filter: "",
       url: ""
     };
   }
@@ -22,7 +24,8 @@ class ShowSongList extends Component {
       .get('http://localhost:8082/api/songs')
       .then(res => {
         this.setState({
-          songs: res.data
+          songs: res.data,
+          allFilteredSongs: res.data
         })
       })
       .catch(err =>{
@@ -33,6 +36,24 @@ class ShowSongList extends Component {
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
+
+  onFilter(e) {
+    e.preventDefault()
+
+    var filteredSongs = [];
+    let filter = e.target.value
+
+    console.log(filter)
+
+    for (let song of this.state.songs) {
+      if(song.name.toLowerCase().includes(filter.toLowerCase())){
+        filteredSongs.push(song)
+      }
+    }
+
+    this.setState({ filter })
+    this.setState({ allFilteredSongs: filteredSongs });
+  }
 
   onSubmit = e => {
     e.preventDefault();
@@ -56,7 +77,7 @@ class ShowSongList extends Component {
         })
 
     } else {
-      alert('insert a valid youtube URL')
+      alert('Insert a valid youtube URL')
     }
 
   };
@@ -73,12 +94,11 @@ class ShowSongList extends Component {
   }
 
   render() {
-    const songs = this.state.songs;
+    const songs = this.state.allFilteredSongs;
+    const {filter} = this.state;
     let songList;
 
-    if(!songs) {
-      songList = "There are no songs!";
-    } else {
+    if(songs) {
       songList = songs.map((song, k) =>
         <SongContainer song={song} key={k} />
       );
@@ -101,13 +121,13 @@ class ShowSongList extends Component {
               <button type="button" className="btn btn-outline-danger btn-block" onClick={this.onDeleteAllClick.bind(this)}>Remove all songs</button>
             </div>
 
-            <div className="addSongField col-md-12">
+            <div className="addSongField col-md-8">
               <form className="form-inline" noValidate onSubmit={this.onSubmit.bind(this)}>
                 <input
                     type='text'
                     name='url'
                     placeholder="URL"
-                    size="100"
+                    size="60"
                     className='form-control input-url'
                     value={this.state.url}
                     onChange={this.onChange}
@@ -119,12 +139,21 @@ class ShowSongList extends Component {
                 />
                 </form>
             </div>
-
-            
+            <div className="songFilter col-md-4">
+            <input
+                    type='text'
+                    name='filter'
+                    placeholder="Filter"
+                    size="40"
+                    className='form-control'
+                    value={filter}
+                    onChange={this.onFilter.bind(this)}
+                />
+            </div>
 
           </div>
 
-          <div className="list">
+          <div className="songList">
                 {songList}
           </div>
         </div>
