@@ -2,20 +2,30 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 
-import CreateBook from './components/CreateBook';
-import ShowBookList from './components/ShowBookList';
-import ShowBookDetails from './components/ShowBookDetails';
-import UpdateBookInfo from './components/UpdateBookInfo';
+import RootComponent from './components/RootComponent';
+import ShowSongList from './components/SongComponents/ShowSongList';
+import AddSong from './components/SongComponents/AddSong';
+import ShowSongDetails from './components/SongComponents/ShowSongDetails';
+import UpdateSong from './components/SongComponents/UpdateSong';
+import CreateBook from './components/BookComponents/CreateBook';
+import ShowBookList from './components/BookComponents/ShowBookList';
+import ShowBookDetails from './components/BookComponents/ShowBookDetails';
+import UpdateBookInfo from './components/BookComponents/UpdateBookInfo';
 
 class App extends Component {
   render() {
     return (
       <Router>
         <div>
-          <Route exact path='/' component={ShowBookList} />
-          <Route path='/create-book' component={CreateBook} />
-          <Route path='/edit-book/:id' component={UpdateBookInfo} />
-          <Route path='/show-book/:id' component={ShowBookDetails} />
+          <Route exact path='/' component={RootComponent} />
+          <Route exact path='/songs' component={ShowSongList} />
+          <Route path='/songs/add-song' component={AddSong} />
+          <Route path='/songs/show-song/:id' component={ShowSongDetails} />
+          <Route path='/songs/edit-song/:id' component={UpdateSong} />
+          <Route exact path="/books" component={ShowBookList} />
+          <Route path='/books/create-book' component={CreateBook} />
+          <Route path='/books/edit-book/:id' component={UpdateBookInfo} />
+          <Route path='/books/show-book/:id' component={ShowBookDetails} />
         </div>
       </Router>
     );

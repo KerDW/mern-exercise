@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import '../App.css';
+import '../../App.css';
 
 class UpdateBookInfo extends Component {
   constructor(props) {
@@ -55,7 +55,7 @@ class UpdateBookInfo extends Component {
     axios
       .put('http://localhost:8082/api/books/'+this.props.match.params.id, data)
       .then(res => {
-        this.props.history.push('/show-book/'+this.props.match.params.id);
+        this.props.history.push('/books/show-book/'+this.props.match.params.id);
       })
       .catch(err => {
         console.log("Error in UpdateBookInfo!");
@@ -70,8 +70,8 @@ class UpdateBookInfo extends Component {
           <div className="row">
             <div className="col-md-8 m-auto">
               <br />
-              <Link to="/" className="btn btn-outline-warning float-left">
-                  Show BooK List
+              <Link to="/books/" className="btn btn-outline-warning float-left">
+                  Show book list
               </Link>
             </div>
             <div className="col-md-8 m-auto">

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import '../App.css';
+import '../../App.css';
 import axios from 'axios';
 
 
@@ -44,7 +44,7 @@ class CreateBook extends Component {
           published_date:'',
           publisher:''
         })
-        this.props.history.push('/');
+        this.props.history.push('/books');
       })
       .catch(err => {
         console.log("Error in CreateBook!");
@@ -58,7 +58,7 @@ class CreateBook extends Component {
           <div className="row">
             <div className="col-md-8 m-auto">
               <br />
-              <Link to="/" className="btn btn-outline-warning float-left">
+              <Link to="/books/" className="btn btn-outline-warning float-left">
                   Show Book List
               </Link>
             </div>
