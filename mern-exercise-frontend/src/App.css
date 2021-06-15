@@ -48,7 +48,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #f8ffd7;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -72,25 +72,25 @@
 }
 
 .CreateBook, .AddSong {
-  background-color: #2c3e50;
+  background-color: #f8ffd7;
   min-height: 100vh;
   color: white;
 }
 
 .ShowBookDetails, .ShowSongDetails {
-  background-color: #2c3e50;
+  background-color: #f8ffd7;
   min-height: 100vh;
   color: white;
 }
 
 .UpdateBookInfo, .UpdateSong {
-  background-color: #2c3e50;
+  background-color: #f8ffd7;
   min-height: 100vh;
   color: white;
 }
 
 .ShowBookList, .ShowComponentList, .ShowSongList{
-  background-color: #2c3e50;
+  background-color: #f8ffd7;
   height: 100%;
   width: 100%;
   min-height: 100vh;
@@ -167,4 +167,9 @@
 
 .songFilter {
   margin-top: 2%;
+}
+
+.song-container {
+  width: 500px !important;
+  display: inline-block;
 }

@@ -41,9 +41,7 @@ class ShowSongList extends Component {
     e.preventDefault()
 
     var filteredSongs = [];
-    let filter = e.target.value
-
-    console.log(filter)
+    let filter = e.target.value;
 
     for (let song of this.state.songs) {
       if(song.name.toLowerCase().includes(filter.toLowerCase())){
