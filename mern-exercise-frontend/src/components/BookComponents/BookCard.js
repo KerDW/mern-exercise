@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../App.css';
+import '../../App.css';
 
 const BookCard = (props) => {
     const book = props.book;
@@ -10,7 +10,7 @@ const BookCard = (props) => {
             <img src="https://commapress.co.uk/books/the-book-of-cairo/cairo-provisional-v3/image%2Fspan3" alt="" />
             <div className="desc">
                 <h2>
-                    <Link to={`/show-book/${book._id}`}>
+                    <Link to={`/books/show-book/${book._id}`}>
                         { book.title }
                     </Link>
                 </h2>
