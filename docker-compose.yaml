@@ -1,0 +1,15 @@
+version: "3.7"
+
+services:
+    mern_backend:
+        image: node:12-alpine
+        command: sh -c "cd mern-exercise-frontend && npm install && cd .. && npm install && npm run dev"
+        ports:
+            - 8082:8082
+            - 3000:3000
+        working_dir: /mern-exercise
+        volumes: 
+            - ./:/mern-exercise
+        environment: 
+            YT_API_KEY: 
+            MONGO_URI: 
